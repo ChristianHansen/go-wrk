@@ -1,2 +1,5 @@
 #! /bin/bash
+
+# Because this doesn't seem to work on my mac, but does on alpine
+
 docker build -f Dockerfile.build . -t go-wrk-builder && docker run -v $(pwd):/go/go-wrk go-wrk-builder
