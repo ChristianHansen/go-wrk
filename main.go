@@ -19,6 +19,7 @@ var (
 	method            = flag.String("m", "GET", "the http request method")
 	requestBody       = flag.String("b", "", "the http requst body")
 	requestBodyFile   = flag.String("p", "", "the http requst body data file")
+	unixSocketPath	  = flag.String("u", "", "unix domain socket path")
 	numConnections    = flag.Int("c", 100, "the max numbers of connections used")
 	totalCalls        = flag.Int("n", 1000, "the total number of calls processed")
 	disableKeepAlives = flag.Bool("k", true, "if keep-alives are disabled")

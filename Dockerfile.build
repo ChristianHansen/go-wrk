@@ -1,0 +1,10 @@
+FROM golang:1.9
+
+# Should mount go-wrk dir on host here
+WORKDIR /go/go-wrk
+
+# cgo must be disabled to compile for alpine
+ENV CGO_ENABLED 0
+ENV GOOS linux
+
+CMD ["go", "build"]

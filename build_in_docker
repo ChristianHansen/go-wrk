@@ -1,0 +1,2 @@
+#! /bin/bash
+docker build -f Dockerfile.build . -t go-wrk-builder && docker run -v $(pwd):/go/go-wrk go-wrk-builder
