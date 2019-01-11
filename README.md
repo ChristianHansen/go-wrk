@@ -13,6 +13,8 @@ it has a couple of features absent from wrk
 this tool is in early stage development but stable enough to run larger benchmark sets.
 missing features will be added as needed, pull requests are welcome ;)
 
+This fork adds support for unix sockets.
+
 ## building
 
 you need go 1.0+ (1.1 is suggested for performance)
