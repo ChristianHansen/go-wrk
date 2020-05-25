@@ -1,0 +1,9 @@
+#!/bin/bash
+
+SOCKET_PATH=$1
+URL=$2
+
+SOCKET_DIR=$(dirname "${SOCKET_PATH}")
+SOCKET_NAME=$(basename "${SOCKET_PATH}")
+
+docker run -it -v "${SOCKET_DIR}:/mnt/sockets/" go-wrk -u "/mnt/sockets/${SOCKET_NAME}" "${URL}"

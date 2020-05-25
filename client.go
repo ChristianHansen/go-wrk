@@ -9,16 +9,35 @@ import (
 	"net/url"
 	"strings"
 	"sync"
+	"context"
+	"net"
+	"time"
 )
 
-func StartClient(url_, heads, requestBody string, meth string, dka bool, responseChan chan *Response, waitGroup *sync.WaitGroup, tc int) {
+// StartClient starts the client for load testing. If |unixSocketPath| is not the empty string, this function will
+// attempt to connect over the unix domain socket at |unixSocketPath|.
+func StartClient(url_, heads, requestBody string, meth string, unixSocketPath string, dka bool, responseChan chan *Response, waitGroup *sync.WaitGroup, tc int) {
 	defer waitGroup.Done()
 
 	var tr *http.Transport
 
 	u, err := url.Parse(url_)
 
-	if err == nil && u.Scheme == "https" {
+	if err != nil {
+		log.Fatalf("parsing url %s", err)
+	}
+
+	if unixSocketPath != "" {
+		var dialContext = func(ctx context.Context, _, _ string) (net.Conn, error) {
+			return (&net.Dialer {
+				Timeout: 5 * time.Second,
+				KeepAlive: 5 * time.Second,
+				DualStack: true,
+			}).DialContext(ctx, "unix", unixSocketPath)
+		}
+
+		tr = &http.Transport{DialContext: dialContext}
+	} else if u.Scheme == "https" {
 		var tlsConfig *tls.Config
 		if *insecure {
 			tlsConfig = &tls.Config{
@@ -73,7 +92,7 @@ func StartClient(url_, heads, requestBody string, meth string, dka bool, respons
 		respObj := &Response{}
 
 		if err != nil {
-			respObj.Error = true
+			log.Fatalf("making http request: %s", err)
 		} else {
 			if resp.ContentLength < 0 { // -1 if the length is unknown
 				data, err := ioutil.ReadAll(resp.Body)

@@ -18,6 +18,7 @@ func SingleNode(toCall string) []byte {
 			*headers,
 			*requestBody,
 			*method,
+			*unixSocketPath,
 			*disableKeepAlives,
 			responseChannel,
 			wg,
