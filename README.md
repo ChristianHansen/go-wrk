@@ -29,10 +29,10 @@ go build
 
 basic usage is quite simple:
 ```
-go-wrk [flags] url
+go-wrk [flags] [url]
 ```
 
-with the flags being
+The flags are below. The "url" parameter is required when used with the flags unless otherwise specified.
 ```
     -H="User-Agent: go-wrk 0.1 bechmark\nContent-Type: text/html;": the http headers sent separated by '\n'
     -b="" the http request body
