@@ -35,13 +35,14 @@ go-wrk [flags] url
 with the flags being
 ```
     -H="User-Agent: go-wrk 0.1 bechmark\nContent-Type: text/html;": the http headers sent separated by '\n'
+    -b="" the http request body
     -c=100: the max numbers of connections used
-    -k=true: if keep-alives are disabled
     -i=false: if TLS security checks are disabled
+    -k=true: if keep-alives are disabled
     -m="GET": the http request method
     -n=1000: the total number of calls processed
     -t=1: the numbers of threads used
-    -b="" the http request body
+    -u="/path/to/unix/socket": Path to a Unix Domain Socket to profile. The url will be ignored if this is passed.
 ```
 for example
 ```
